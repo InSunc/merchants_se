@@ -11,6 +11,8 @@ module MerchantsSe
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 
+    config.logger = ActiveSupport::Logger.new('/dev/null')
+
     # Default url is mandatory for _devise_
     # TODO: replace hardcoded port with env var
     config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }

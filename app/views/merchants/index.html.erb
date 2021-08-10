@@ -2,3 +2,12 @@
 <h1>Merchants#index</h1>
 <p>Find me in app/views/merchants/index.html.erb</p>
 <button type="button" class="btn btn-primary">Primary</button>
+<br>
+<hr>
+<%= link_to "POST merchants", merchants_path, method: :post %>
+<hr>
+<%= link_to "Sign In", new_user_session_path, method: :get %>
+<hr>
+<%= link_to "Sign Out", destroy_user_session_path,
+                  method: :delete,
+                    data: { confirm: "Are you sure?" } %>

@@ -46,8 +46,8 @@ ActiveRecord::Schema.define(version: 2021_08_15_160918) do
   end
 
   create_table "merchant_addresses", force: :cascade do |t|
-    t.bigint "merchant_id"
-    t.bigint "address_id"
+    t.bigint "merchant_id", null: false
+    t.bigint "address_id", null: false
     t.jsonb "extra"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

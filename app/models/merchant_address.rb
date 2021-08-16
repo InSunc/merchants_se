@@ -3,7 +3,6 @@ class MerchantAddress < ApplicationRecord
 
   belongs_to :merchant
   belongs_to :address
-
-  pg_search_scope :search, associated_against: { merchant: :name }
-
+  store_accessor :extra, :phone, :website
+  pg_search_scope :search, :against => :extra, associated_against: { merchant: :name }
 end

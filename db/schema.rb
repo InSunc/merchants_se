@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_15_233736) do
+ActiveRecord::Schema.define(version: 2021_08_16_203710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,10 +48,11 @@ ActiveRecord::Schema.define(version: 2021_08_15_233736) do
   create_table "merchant_addresses", force: :cascade do |t|
     t.bigint "merchant_id", null: false
     t.bigint "address_id", null: false
-    t.jsonb "extra", default: {}
+    t.jsonb "extra"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["address_id"], name: "index_merchant_addresses_on_address_id"
+    t.index ["extra"], name: "index_merchant_addresses_on_extra", using: :gin
     t.index ["merchant_id"], name: "index_merchant_addresses_on_merchant_id"
   end
 

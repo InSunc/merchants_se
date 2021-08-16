@@ -107,7 +107,12 @@ class MerchantsController < ApplicationController
 
 
   def index
-    @merchant_addresses = MerchantAddress.all
+    @search = params[:filter]
+    if not (@search.nil? or @search.empty?)
+      @merchant_addresses = MerchantAddress.search(params[:filter])
+    else
+      @merchant_addresses = MerchantAddress.all
+    end
   end
 
   private

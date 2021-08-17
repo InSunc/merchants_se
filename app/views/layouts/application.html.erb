@@ -10,8 +10,30 @@
   </head>
 
   <body>
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="../../assets/logo.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+        </a>
+        <form class="d-flex">
+        <span class="navbar-text px-5">
+          <%= current_user.nil? ? "Guest" : current_user.email %>
+        </span>
+          <% if current_user.nil? %>
+            <%= link_to "Sign Up", new_user_registration_path, method: :get, class: "btn btn-outline-secondary" %>
+            <%= link_to "Log In", new_user_session_path, method: :get, class: "btn btn-link" %>
+          <% else %>
+            <%= link_to "Sign Out", destroy_user_session_path,
+                            method: :delete,
+                              data: { confirm: "Are you sure?" },
+                              class: "btn btn-outline-secondary" %>
+          <%end%>
+        </form>
+      </div>
+    </nav>
+
     <div class="container">
-      <div class="wrapper">
+      <div>
         <%= tag.p notice, class: notice.nil? ? "" : "alert alert-info" %>
         <%= tag.p alert, class: alert.nil? ? "" : "alert alert-danger" %>
       </div>

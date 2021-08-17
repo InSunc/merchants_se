@@ -1,6 +1,29 @@
 <%= current_user.nil? ? "guest" : current_user.email %>
-<h1>Merchants#index</h1>
-<p>Find me in app/views/merchants/index.html.erb</p>
+<h1>Merchants:</h1>
+
+<table class="table table-striped table-hover">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">City</th>
+      <th scope="col">Street</th>
+      <th scope="col">Country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @merchant_addresses.each_with_index do |ma, index| %>
+    <tr>
+        <th scope="row"><%= index %></th>
+        <td><%= ma.merchant.name%></td>
+        <td><%= ma.address.country_city.city.name %></td>
+        <td><%= ma.address.street %></td>
+        <td><%= ma.address.country_city.country.code %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <button type="button" class="btn btn-primary">Primary</button>
 <br>
 <hr>

@@ -14,4 +14,38 @@
  *= require_self
  */
 
+
+$primary: #212227;
+$theme-colors: (
+    "primary": $primary,
+    "secondary": #637074,
+    "success": #28a745,
+    "danger": #DB504A,
+    "warning": #ffc107,
+    "info": #A2B4C9,
+    "light": rgba(255, 255, 255, 0.466),
+    "dark": $primary,
+    "muted": #6c757d,
+    "white": #F8F8F8,
+);
+
+
  @import "bootstrap";
+
+ $header-lr-padding: 20pt;
+
+.form-control:focus {
+    border-color: theme-colors(primary);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px $primary
+}
+
+ h1,h2,h3 {
+    letter-spacing: 10px;
+    font-family: "Arial Black", sans-serif;
+    font-size: 2.5em;
+    letter-spacing: -1px;
+    background-color: $primary;
+    padding-left:  $header-lr-padding;
+    padding-right: $header-lr-padding;
+    color: white;
+ }

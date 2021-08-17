@@ -4,8 +4,9 @@ require 'csv'
 require 'concurrent'
 
 class MerchantsController < ApplicationController
-  skip_before_action :verify_authenticity_token
-  # before_action :authenticate_user!
+  skip_before_action :verify_authenticity_token, only: [:create]
+  before_action :authenticate_user!
+
 
   def create
     env = {
@@ -29,6 +30,7 @@ class MerchantsController < ApplicationController
         country_code = entry[3].to_s
         street_name = entry[2].to_s.strip
         street_name.force_encoding("UTF-8")
+        extra = JSON.parse(entry[4].to_s.gsub(/=>/, ':'))
 
         logger.debug "\tMerchant: #{entry[0]}\tCity name:#{city_name}\tCountry Code:#{country_code}"
 
@@ -58,7 +60,7 @@ class MerchantsController < ApplicationController
             address = Address.find_by(street: street_name, country_city_id: country_city.id)
             address ||= Address.new(street: street_name, country_city_id: country_city.id) 
 
-            merchant_address = MerchantAddress.new(merchant:merchant, address: address)
+            merchant_address = MerchantAddress.new(merchant:merchant, address: address, extra: extra)
 
             city.save
             address.save
@@ -74,7 +76,7 @@ class MerchantsController < ApplicationController
               address = Address.find_by(street: street_name, country_city: country_city)
               address ||= Address.new(street: street_name, country_city: country_city)
 
-              merchant_address = MerchantAddress.new(merchant:merchant, address: address)
+              merchant_address = MerchantAddress.new(merchant:merchant, address: address, extra: extra)
 
               city.save
               country.save
@@ -107,7 +109,12 @@ class MerchantsController < ApplicationController
 
 
   def index
-    @merchant_addresses = MerchantAddress.all
+    @search = params[:filter]
+    if not (@search.nil? or @search.empty?)
+      @merchant_addresses = MerchantAddress.search(params[:filter])
+    else
+      @merchant_addresses = MerchantAddress.all
+    end
   end
 
   private
